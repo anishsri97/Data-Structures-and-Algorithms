@@ -312,4 +312,71 @@ class AddEven
         
         
     }
+ /// count the number of connected components
+    public int numComponents(ListNode head, int[] nums) 
+    {
+       //int count=0;
+        
+        Set<Integer> set = new HashSet<>();
+        ListNode cur=head;
+        for(int value:nums)
+        {
+            set.add(value);
+        }
+        int count=0;
+        boolean flag=false;
+        while(cur!=null)
+        {
+            if(set.contains(cur.val))
+            {
+                
+                if(!flag)count+=1;
+                flag=true;
+            }
+            else
+            {
+                flag=false;
+            }
+            cur=cur.next;
+        }
+        return count;
+        
+        
+    }
+
+
+
+    
+    
+    // Copy List with random pointer runtime 0 ms
+    public Node copyRandomList(Node head) 
+    {
+          Node duumy = new Node(-1);
+          Node prev=duumy;
+          Node cur = head;
+          Map<Node,Node> map = new HashMap<>();
+          while(cur!=null)// creation of deepcopy of list
+          {
+             prev.next = new Node(cur.val);
+             map.put(cur,prev.next); //mapping old node to new node
+             cur=cur.next;
+              prev=prev.next;
+          }
+         
+          cur=head;
+         Node newList=duumy.next;
+        while(cur!=null)// mapping random node
+        {
+            Node key = cur.random;
+            
+            newList.random=map.get(key);
+            newList=newList.next;
+            cur=cur.next;
+            
+        }
+        return duumy.next;
+        
+        
+        
+    }
 }
