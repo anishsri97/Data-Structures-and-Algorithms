@@ -47,6 +47,22 @@ class AddEven
         
     }
 
+   // reversing linkedlist in constant space
+      
+    public ListNode reverse(listNode head)
+    {
+      ListNode cur = head,prev=null;
+
+          while(cur!=null)
+          {
+              ListNode nxt = cur.next;
+              cur.next=prev;
+              prev=cur;
+              cur=nxt;
+          }
+  
+    }
+
 
   // getting middle list from linkedlist
     public static list getMiddle(list head)
@@ -257,5 +273,43 @@ class AddEven
         }
         dummy.next=cur;
         return newhead.next;
+    }
+  
+
+    // reverse LinkedList - II
+    public ListNode reverseBetween(ListNode head, int left, int right) 
+    {
+       if(head.next==null || (left==right)) return head;
+        
+       ListNode dummy = new ListNode(-1);
+       ListNode nhead=dummy,cur=head;
+        int node=1;
+       while(cur!=null)
+       {
+           if(node==left)
+           {
+               ListNode rht = cur;
+               int rcount=node;
+               while(true)
+               {
+                   if(rcount==right)break;
+                   rcount++;
+                   rht=rht.next;
+               }
+               ListNode nxt = rht.next;
+               rht.next=null;
+               dummy.next=reverse(cur);
+               cur.next=nxt;
+               break;
+               
+           }
+           dummy.next=cur;
+           dummy=dummy.next;
+           cur=cur.next;
+           node++;
+       }
+        return nhead.next;
+        
+        
     }
 }
