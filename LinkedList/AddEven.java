@@ -102,6 +102,35 @@ class AddEven
         }
     }
 
+
+    // add first element in linkedlist
+
+    public ListNode addFirst(ListNode head,int value)
+    {
+        ListNode temp = new ListNode(value);
+        temp.next=head;
+        return head=temp;
+    }
+
+    // remove node
+
+    public ListNode removeNode(ListNode head,int value)
+    {
+         if(head==null) return head;// checking for empty linkedlist
+
+         ListNode cur=head,prev=null;
+
+         while(cur.val!=value) //searching for node
+         {
+             prev=cur;
+             cur=cur.next;
+         }
+
+         if(prev==null) return head.next; // if first element is that node
+         prev.next=cur.next  //other than first node
+         return head;
+    }
+
     // remove duplicates from sorted list
      public static ListNode removeDuplicates(ListNode head) 
     {
