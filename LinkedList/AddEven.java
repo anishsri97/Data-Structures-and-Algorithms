@@ -408,4 +408,113 @@ class AddEven
         
         
     }
+
+// implementation of LRU cache
+//["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+//[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+
+    // structure of doubly linkedlist node
+    class dll{
+        int data;
+        int value;
+        dll prev,next;
+        dll(int key,int value)
+        {
+            this.key=key;
+            this.value=value;
+            prev=next=null;
+
+        }
+
+    }
+
+    dll head=tail=null;
+
+
+    // get function
+    public int get(int key)
+    {
+        int value = -1;
+        if(map.containsKey(key))
+        {
+            value = map.get(key).value;
+            if(head.key!=key)
+            {
+                delete(key);
+                addFirst(key);
+            }
+        }
+        return value;
+    }
+
+
+    //map's put function
+    public void put(int key,int value)
+    {
+       if(map.containsKey(key))
+       {
+           map.put(key,dll(key,value));
+           if(head.key!=key)
+           {
+               delete(key);
+               addFirst(key);
+           } 
+
+       }
+       else
+       {
+          dll node = new dll(key,value);
+          map.put(key,node);
+          if(map.size()>capacity)
+          {
+              int key=-1;
+              if(head==tail)
+              {
+                  key=head.key;
+                  head=tail=null;
+
+              }
+              else{
+                  key=tail.key;
+                  tail=tail.next;
+              }
+              map.remove(key);
+              
+              
+          }  
+          addFirst(key); 
+       } 
+
+       public void delete(int key)
+       {
+           if(key==tail.key)
+           {
+               tail=tail.next;
+               return;
+           }
+           dll temp=tail;
+
+           while(temp.next!=null)
+           {
+               if(temp.key==key)break;
+           }
+           temp.prev.next=temp.next;
+       }
+
+       public void addFirst(int key)
+       {
+           dll temp = map.get(key);
+
+           if(head==null)
+           {
+               head=tail=temp;
+           }
+           else{
+
+               head.next=temp;
+               temp.prev=head;
+               head=temp;
+           }
+       }
+    }
 }
