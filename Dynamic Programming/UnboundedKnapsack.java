@@ -67,4 +67,72 @@ class UnboundedKnapsack
             return dp[n][w] = knap(wt,w,n-1,dp,val);
         }
     }
+
+
+
+    // tabulation method
+    static int maxProfit(int W,int wt[],int val[],int N, int dp[][])
+    {
+       for(int w=0;w<=W;w++)
+       {
+           for(int n=0;n<=N;n++)
+           {
+             if(n==0 || w== 0) continue;
+        
+              
+        
+                if(w>=wt[n-1])
+               {
+                  dp[w][n]=Math.max(val[n-1]+dp[w-wt[n-1]][n-1],dp[w][n-1]);
+                }
+             else
+             {
+               return dp[w][n]=dp[w][n-1];
+             }
+           }
+       } 
+        
+        return dp[W][N];
+        
+        
+    }
+ 
+
+
+     // memoization method
+    static int maxProfit(int w,int wt[],int val[],int n, int dp[][])
+    {
+        if(n==0 || w== 0) return 0; // base condition
+        
+        if(dp[w][n]!=0) return dp[w][n]; // checking for storage
+        
+        if(w>=wt[n-1]) // choice
+        {
+            return dp[w][n]=Math.max(val[n-1]+maxProfit(w-wt[n-1],wt,val,n-1,dp),maxProfit(w,wt,val,n-1,dp));
+        }
+        else // when bag size smaller
+        {
+            return dp[w][n]=maxProfit(w,wt,val,n-1,dp);
+        }
+        
+    }
+
+
+    // displaying 2d array
+    public void display2D(int dp[][])
+    {
+        for(int a[]:dp)
+        {
+            System.out.println(display(a));
+        }
+    }
+
+     //displaying 1D array
+    public void display(int a[])
+    {
+        for(int ar:a)
+        {
+            System.out.print(ar+" ");
+        }
+    }
 }
