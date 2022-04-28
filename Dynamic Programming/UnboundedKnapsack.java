@@ -116,7 +116,107 @@ class UnboundedKnapsack
         }
         
     }
+    //equal sum partition memoization
+    static int equalSum(int tar,int n,int arr[],int dp[][])
+    {
+        if(tar==0) return  dp[n][tar]= 1;
+        
+        if(n==0) return dp[n][tar]=0;
+        
+        
+        if(dp[n][tar]!=-1) return dp[n][tar];
+        
+        if(tar>=arr[n-1])
+        {
+            return dp[n][tar]=equalSum(tar-arr[n-1],n-1,arr,dp)|equalSum(tar,n-1,arr,dp);
+        }
+        else
+        {
+            return dp[n][tar]=equalSum(tar,n-1,arr,dp);
+        }
+    }
 
+
+    // equal sum partition tabulation method
+    static int equalSum(int T,int N,int arr[],int dp[][])
+    {
+       for(int n=0;n<=N;n++)
+       {
+           for(int t=0;t<=T;t++)
+           {
+               if(t==0)
+               {
+                   dp[n][t]=1;
+                   continue;
+               }
+        
+               if(n==0)
+               {
+                   dp[n][t]=0;
+                   continue;
+               }
+        
+         if(t=arr[n-1])
+         {
+             dp[n][t]=dp[n-1][t-arr[n-1]]|dp[n-1][t];
+         }
+        else
+        {
+          dp[n][t]=dp[n-1][t];
+        }
+           }
+       }
+
+       return dp[N][T]; 
+        
+        
+        
+    }
+
+
+      // reach to given score
+    public long count(int n) 
+    {
+      int arr[] = new int[3];
+      arr[0]=3;
+      arr[1]=5;
+      arr[2]=10;
+      
+      long dp[] = new long[n+1];
+      dp[0]=1;
+      for(int i=1;i<=3;i++)
+      {
+          for(int j=0;j<=n;j++)
+          {
+              if(j>=arr[i-1])
+              {
+                  dp[j]+=dp[j-arr[i-1]];
+              }
+          }
+      }
+      
+      return dp[n];
+    }
+
+     // coin change unbounded knapsack
+    public long count(int arr[], int m, int n) 
+    {
+       long dp[] = new long[n+1];
+       dp[0]=1;
+       for(int i=1;i<=m;i++)
+       {
+          for(int j=0;j<=n;j++)
+          {
+              if(j>=arr[i-1])
+              {
+                  dp[j]+=dp[j-arr[i-1]];
+              }
+          }
+       }
+      
+      return dp[n];
+    
+    }
 
     // displaying 2d array
     public void display2D(int dp[][])
