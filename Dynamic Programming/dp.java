@@ -103,4 +103,116 @@ class dp
       }    
                   return dp[N];        
     }
+
+
+
+
+
+
+
+
+    //----------------------------------------------------
+
+    // longest palindromic subsequence
+     public int lps(int i,int j,int dp[][],String str)
+    {
+        if(i>=j)
+        {
+            return dp[i][j]=(i>j)?0:1;
+        }
+        
+        if(dp[i][j]!=0) return dp[i][j];
+        if(str.charAt(i)==str.charAt(j)) // when the two char are equals
+        {
+            return dp[i][j]=2+lps(i+1,j-1,dp,str);
+        }
+        
+        else
+        {
+            return dp[i][j]=Math.max(lps(i+1,j,dp,str),lps(i,j-1,dp,str)); // when taking one char at time
+        }
+        
+    }
+
+    //--------unbounded knapsack--------//
+
+    // rod cutting proble// memoization
+
+    public int cutting(int size[],int price[],int N,int I,int dp[][])
+    {
+       
+
+       for(int i=0;i<=N;i++)
+       {
+           for(int n=0;n<=N;n++)
+           {
+              if(i==0 || n==0)
+              {
+
+               dp[i][n] = 0;
+               continue;
+              } 
+        
+        
+        
+            if(size[i-1]<=n)
+            {
+                dp[i][n]=Math.max(price[i-1]+dp[i][n-size[i-1]],dp[i-1][n]);
+            }
+        
+           else
+           {
+              dp[i][n]=dp[i-1][n];
+           }
+           
+        }
+      
+      }
+      return dp[I][N];
+
+        
+        
+    }
+
+
+
+    // rod cutting problem iterative
+
+    public int cutting(int size[],int price[],int N,int I,int dp[][])
+    {
+       
+
+       for(int i=0;i<=N;i++) // for size of array
+       {
+           for(int n=0;n<=N;n++) // for length of rod
+           {
+              if(i==0 || n==0)
+              {
+
+               dp[i][n] = 0;
+               continue;
+              } 
+        
+        
+        
+            if(size[i-1]<=n)
+            {
+                dp[i][n]=Math.max(price[i-1]+dp[i][n-size[i-1]],dp[i-1][n]);
+            }
+        
+           else
+           {
+              dp[i][n]=dp[i-1][n];
+           }
+           
+        }
+      
+      }
+      return dp[I][N];
+
+        
+        
+    }
+}
+}
 }
