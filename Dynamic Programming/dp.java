@@ -213,6 +213,53 @@ class dp
         
         
     }
+    
+    //maximum number of ways coin change memoization 
+    public long coinChange(int arr[],int m,int n,long dp[][])
+    {
+        if(n==0) return 1;
+        
+        if(m==0) return 0;
+        
+        
+       if(dp[m][n]!=0) return dp[m][n];
+        
+        if(arr[m-1]<=n)
+        {
+            return dp[m][n]=coinChange(arr,m,n-arr[m-1],dp)+coinChange(arr,m-1,n,dp);
+        }
+        else
+        {
+            return dp[m][n]=coinChange(arr,m-1,n,dp);
+        }
+        
+    }
+ // maximum number of coin change iteartive
+    public long coinChange(int arr[],int M,int N,long dp[][])
+    {
+        for(int m=0;m<=M;m++)
+        {
+            for(int n=0;n<=N;n++)
+            {
+                if(n==0||m==0)
+                {
+                    dp[m][n]=(n==0)?1:0;
+                    continue;
+                }
+               if(arr[m-1]<=n)
+               {
+                 dp[m][n]=dp[m][n-arr[m-1]]+dp[m-1][n]
+               }
+              else
+              {
+               dp[m][n]=dp[m-1][n];
+              }   
+            }
+        }
+        
+       return dp[M][N]; 
+        
+    }
 }
 }
 }
