@@ -1,5 +1,7 @@
 
 // Structure of Node
+
+
 class node
 {
     int data;
